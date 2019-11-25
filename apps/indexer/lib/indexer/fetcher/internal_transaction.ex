@@ -20,7 +20,7 @@ defmodule Indexer.Fetcher.InternalTransaction do
 
   @behaviour BufferedTask
 
-  @max_batch_size 4
+  @max_batch_size 10
   @max_concurrency 4
   @defaults [
     flush_interval: :timer.seconds(3),
@@ -75,6 +75,8 @@ defmodule Indexer.Fetcher.InternalTransaction do
       Chain.stream_blocks_with_unfetched_internal_transactions(initial, fn block_number, acc ->
         reducer.(block_number, acc)
       end)
+
+    :ok = Chain.remove_nonconsensus_blocks_from_pending_ops()
 
     final
   end
