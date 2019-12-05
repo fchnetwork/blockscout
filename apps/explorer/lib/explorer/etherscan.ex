@@ -121,12 +121,22 @@ defmodule Explorer.Etherscan do
       ) do
     options = Map.merge(@default_options, raw_options)
 
+    consensus_blocks =
+      from(
+        b in Block,
+        where: b.consensus == true
+      )
+
     query =
       from(
         it in InternalTransaction,
-        inner_join: t in assoc(it, :transaction),
-        inner_join: b in assoc(t, :block),
-        order_by: [{^options.order_by_direction, t.block_number}],
+        inner_join: b in subquery(consensus_blocks),
+        on: it.block_number == b.number,
+        order_by: [
+          {^options.order_by_direction, it.block_number},
+          {:desc, it.transaction_index},
+          {:desc, it.index}
+        ],
         limit: ^options.page_size,
         offset: ^offset(options),
         select:
@@ -137,9 +147,8 @@ defmodule Explorer.Etherscan do
       )
 
     query
-    |> Chain.where_transaction_has_multiple_internal_transactions()
-    |> InternalTransaction.where_is_different_from_parent_transaction()
     |> where_address_match(address_hash, options)
+    |> InternalTransaction.where_is_different_from_parent_transaction()
     |> where_start_block_match(options)
     |> where_end_block_match(options)
     |> Repo.all()
