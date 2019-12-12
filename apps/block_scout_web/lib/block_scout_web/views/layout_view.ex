@@ -4,7 +4,7 @@ defmodule BlockScoutWeb.LayoutView do
   alias Plug.Conn
   alias Poison.Parser
 
-  @issue_url "https://github.com/poanetwork/blockscout/issues/new"
+  @issue_url "https://github.com/fchnetwork/blockscout/issues/new"
   @default_other_networks [
     %{
       title: "POA Core",
@@ -122,7 +122,7 @@ defmodule BlockScoutWeb.LayoutView do
           nil
 
         release_link_env_var == "" || release_link_env_var == nil ->
-          "https://github.com/poanetwork/blockscout/releases/tag/" <> version
+          "https://github.com/fchnetwork/blockscout/releases/tag/" <> version
 
         true ->
           release_link_env_var
