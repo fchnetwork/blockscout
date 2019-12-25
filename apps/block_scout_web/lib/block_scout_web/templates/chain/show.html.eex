@@ -4,6 +4,7 @@
       <!-- Graph and legend -->
       <div class="dashboard-banner-network-graph">
         <!-- Graph -->
+        <!-- TODO: Comment out until we are not on CMC
         <div class="dashboard-banner-chart">
           <div data-chart-loading-message class="tile tile-muted text-center dashboard-banner-chart-loader">
             <span class="loading-spinner-small mr-2">
@@ -17,7 +18,9 @@
           </button>
           <canvas data-chart="marketHistoryChart" data-market_history_chart_path="<%= @chart_data_path %>" width="350" height="152" style="display: none;"></canvas>
         </div>
+        -->
         <!-- Legend -->
+        <!-- TODO: Comment out until we are not on CMC
         <div class="dashboard-banner-chart-legend">
           <div class="dashboard-banner-chart-legend-item">
             <span class="dashboard-banner-chart-legend-label">
@@ -34,6 +37,7 @@
             </span>
           </div>
         </div>
+        -->
       </div>
       <!-- Stats -->
       <div class="dashboard-banner-network-plain-container">
